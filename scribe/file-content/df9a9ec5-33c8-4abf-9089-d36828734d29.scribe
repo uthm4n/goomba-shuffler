@@ -1,21 +1,24 @@
+resource "file-content" "df9a9ec5-33c8-4abf-9089-d36828734d29" {
+  uuid = "df9a9ec5-33c8-4abf-9089-d36828734d29"
+  content = <<EOFSCRIBE
 package com.morpheus
- 
+
 import groovy.json.*
 import groovy.sql.Sql
 import com.morpheus.MorpheusUtils
 import com.morpheusdata.core.util.HttpApiClient
 import com.morpheusdata.core.util.HttpApiClient.RequestOptions
- 
+
 /*
 def APPLIANCE_URL = morpheus.applianceUrl
 def MORPHEUS_API_TOKEN = morpheus.getApiAccessToken() ?: cypher.read('secret/morpheus-api-token')
- 
+
 // Method to call the API
 def callApi(String url) {
     def client = new HttpApiClient()
     def requestOptions = new HttpApiClient.RequestOptions()
     requestOptions.headers = ["Authorization": "Bearer ${MORPHEUS_API_TOKEN}"]
- 
+
     def interfaceResponse = client.callJsonApi(url, null, null, null, requestOptions, 'GET')
     if (interfaceResponse.success) {
         println "\u001B[36mInterfaces:\n${interfaceResponse.data}\u001B[0m"
@@ -26,7 +29,7 @@ def callApi(String url) {
     }
 }
 */
- 
+
 Map getDatasource(String fromSource) {
     def datasource = ["url": "", "username": "morpheus", "password": "", "driverClassName": "com.mysql.cj.jdbc.Driver"]
     switch(fromSource) {
@@ -51,7 +54,7 @@ Map getDatasource(String fromSource) {
     }
     return datasource
 }
- 
+
 static Sql getSqlClient(Map datasource) {
     def sql
     try {
@@ -70,17 +73,17 @@ static Sql getSqlClient(Map datasource) {
     }
     return sql
 }
- 
+
 def getCurrentNetworkInterfaces() {
     def currentInterfaces = results['getCurrentInterfaces'] ?: results.getCurrentInterfaces
     return currentInterfaces
 }
- 
+
 def updateInterfaces(Sql sql, List<Map> currentInterfaces) {
     println "\u001B[36mInterfaces before SQL update:\r\n${getCurrentNetworkInterfaces()}\u001B[0m\r\n"
     def primary = currentInterfaces.find { it.primaryInterface == true }
     def secondary = currentInterfaces.find { it.primaryInterface == false }
- 
+
     if (primary && secondary) {
         def updatePrimaryToSecondary = """
             UPDATE compute_server_interface
@@ -90,7 +93,7 @@ def updateInterfaces(Sql sql, List<Map> currentInterfaces) {
         println("\u001B[34mExecuting SQL query [update primary interface to FALSE]:\n${updatePrimaryToSecondary}\u001B[0m\r\n")
         sql.execute(updatePrimaryToSecondary)
         println("\u001B[34mSQL query executed successfully: [update primary interface to FALSE]\u001B[0m\r\n")
- 
+
         def updateSecondaryToPrimary = """
             UPDATE compute_server_interface
             SET primary_interface = true
@@ -109,7 +112,7 @@ def updateInterfaces(Sql sql, List<Map> currentInterfaces) {
         println("\u001B[31mNo valid primary and secondary interfaces found for update.\u001B[0m\r\n")
     }
 }
- 
+
 def main() {
     def datasource = getDatasource("cypher") ?: getDatasource("shell")
     def sql = null
@@ -130,5 +133,9 @@ def main() {
         }
     }
 }
- 
+
 main()
+EOFSCRIBE
+  dateCreated = "2024-07-06T16:14:12.000Z"
+  lastUpdated = "2024-07-12T20:12:27.000Z"
+}

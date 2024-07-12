@@ -1,0 +1,8 @@
+{
+    "dataSource": {
+      "url": "jdbc:mysql://127.0.0.1:3306/morpheus?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true",
+      "username": "morpheus",
+      "password": "${REPLACE-ME}", 
+      "driverClassName": "com.mysql.cj.jdbc.Driver"
+    }
+}

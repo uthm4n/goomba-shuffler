@@ -1,0 +1,28 @@
+resource "file-content" "766dfb32-fa5e-4d36-8987-d8857ac05d10" {
+  uuid = "766dfb32-fa5e-4d36-8987-d8857ac05d10"
+  content = <<EOFSCRIBE
+package com.morpheus
+
+import groovy.json.*
+
+def currentInterfaces = JsonOutput.toJson(instance.containers[0].server?.interfaces)
+
+println "Server ID: ${instance.container?.serverId}"
+
+println """
+Current Network Interfaces [instance.containers[0].server?.interfaces]:
+${currentInterfaces}
+
+Index 0:
+${instance.containers[0].server?.interfaces[0]}
+
+Index 1:
+${instance.containers[0].server?.interfaces[1]}
+
+"""
+
+return currentInterfaces
+EOFSCRIBE
+  dateCreated = "2024-07-11T12:07:01.000Z"
+  lastUpdated = "2024-07-12T19:21:14.000Z"
+}
