@@ -1,0 +1,5 @@
+resource "task-set-task" "034cddd5-762a-44ff-a509-0ef4f61f7e09" {
+  uuid = "034cddd5-762a-44ff-a509-0ef4f61f7e09"
+  task = { code = "getCurrentInterfaces" }
+  taskPhase = "operation"
+}

@@ -1,0 +1,6 @@
+resource "task-set-task" "8dc157db-e718-414c-bbee-75b425c7d566" {
+  uuid = "8dc157db-e718-414c-bbee-75b425c7d566"
+  task = { code = "debugInterfaces" }
+  taskOrder = 1
+  taskPhase = "operation"
+}

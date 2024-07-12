@@ -1,0 +1,15 @@
+resource "task" "debugInterfaces" {
+  code = "debugInterfaces"
+  name = "debugInterfaces"
+  uuid = "75aa239e-5f9f-47d2-a1b3-3062009c761a"
+  dateCreated = "2024-07-12T18:16:32.000Z"
+  executeTarget = "local"
+  lastUpdated = "2024-07-12T18:17:32.000Z"
+  options = [
+    {
+      content = { uuid = "7efc1d12-cc95-4041-9c19-a98390bbb7fd" }
+      optionType = { code = "groovyScript" }
+    }
+  ]
+  taskType = { code = "groovyTask" }
+}

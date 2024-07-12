@@ -1,0 +1,12 @@
+resource "task-set" "debugInterfaceUpdate" {
+  name = "debugInterfaceUpdate"
+  uuid = "9c723580-759e-4ed8-b779-b899af3265e4"
+  dateCreated = "2024-07-12T18:17:02.000Z"
+  lastUpdated = "2024-07-12T18:41:49.000Z"
+  taskSetTasks = [
+    { uuid = "034cddd5-762a-44ff-a509-0ef4f61f7e09" },
+    { uuid = "8dc157db-e718-414c-bbee-75b425c7d566" },
+    { uuid = "b4be7657-2999-4b6e-aa9b-f0f77050dba6" }
+  ]
+  taskSetType = "operation"
+}

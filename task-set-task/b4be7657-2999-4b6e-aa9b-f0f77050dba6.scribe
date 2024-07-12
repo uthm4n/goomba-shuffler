@@ -1,0 +1,6 @@
+resource "task-set-task" "b4be7657-2999-4b6e-aa9b-f0f77050dba6" {
+  uuid = "b4be7657-2999-4b6e-aa9b-f0f77050dba6"
+  task = { code = "queryExecutor" }
+  taskOrder = 2
+  taskPhase = "operation"
+}

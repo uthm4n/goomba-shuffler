@@ -1,0 +1,10 @@
+resource "file-content" "7efc1d12-cc95-4041-9c19-a98390bbb7fd" {
+  uuid = "7efc1d12-cc95-4041-9c19-a98390bbb7fd"
+  content = <<EOFSCRIBE
+def getCurrentInterfaceResults = results['getCurrentInterfaces'] ?: results.getCurrentInterfaces
+
+println "${getCurrentInterfaceResults}"
+EOFSCRIBE
+  dateCreated = "2024-07-12T18:16:32.000Z"
+  lastUpdated = "2024-07-12T18:17:32.000Z"
+}

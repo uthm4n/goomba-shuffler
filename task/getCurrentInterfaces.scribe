@@ -1,0 +1,16 @@
+resource "task" "getCurrentInterfaces" {
+  code = "getCurrentInterfaces"
+  name = "getCurrentInterfaces"
+  uuid = "e42ec722-3bc7-48e0-91f4-1f01c27e1dbf"
+  dateCreated = "2024-07-11T12:07:01.000Z"
+  executeTarget = "local"
+  lastUpdated = "2024-07-12T19:21:14.000Z"
+  options = [
+    {
+      content = { uuid = "766dfb32-fa5e-4d36-8987-d8857ac05d10" }
+      optionType = { code = "groovyScript" }
+    }
+  ]
+  resultType = "json"
+  taskType = { code = "groovyTask" }
+}

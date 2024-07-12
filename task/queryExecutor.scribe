@@ -1,0 +1,16 @@
+resource "task" "queryExecutor" {
+  code = "queryExecutor"
+  name = "queryExecutor"
+  uuid = "ef82f316-2f49-4ff3-9cbd-b61f5c3ae661"
+  dateCreated = "2024-07-06T16:14:12.000Z"
+  executeTarget = "local"
+  labels = [ "Step 4", "execute queries", "updateNetworkInterfaces" ]
+  lastUpdated = "2024-07-11T13:07:39.000Z"
+  options = [
+    {
+      content = { uuid = "df9a9ec5-33c8-4abf-9089-d36828734d29" }
+      optionType = { code = "groovyScript" }
+    }
+  ]
+  taskType = { code = "groovyTask" }
+}
