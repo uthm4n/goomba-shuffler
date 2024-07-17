@@ -1,7 +1,9 @@
 # network-interface-updater
 
 ### NOTE: THE FINAL WORKING SOLUTION IS IN THE `workflow/` FOLDER IN THIS REPOSITORY
-
+  Purpose
+  ---------
+  The goal of the Groovy Script is to swap the current secondary network interface the primary and vice versa by setting the **primary_interface** property to `0 (false)` or `1 (true)`
 ## Setup:
 1. SSH into a Morpheus application node
 2. Retrieve the database password from `/etc/morpheus/morpheus-secrets.json`
