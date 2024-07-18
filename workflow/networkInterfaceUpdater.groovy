@@ -70,12 +70,17 @@ static Sql getSqlClient(Map datasource) {
     return sql
 }
 
-def logDebug(message) {
-    println "\u001B[31m[DEBUG] -\u001B[0m\u001B[35m${new Date()}\u001B[0m\u001B[32m - ${message}\u001B[0m"
+def logDebug(message, coloredMessage = "") {
+    println """
+\u001B[31m[DEBUG]\u001B[0m \u001B[3;1m---\u001B[0m \u001B[0;95m${new Date()}\u001B[0m \u001B[3;1m---\u001B[0m \u001B[31m${message}\u001B[0m 
+\u001B[1;34m${coloredMessage}\u001B[0m
+    """
 }
-
 def logResult(result) {
-    println "\u001B[42m[RESULT]\u001B[0m:\r\n\u001B[35m${result}\u001B[0m"
+    println """\u001B[42m[RESULT]\u001B[0m:
+                                            
+                             \u001B[32m${result}\u001B[0m
+    """
 }
 
 def main() {
