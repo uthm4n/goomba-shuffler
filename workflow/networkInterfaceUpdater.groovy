@@ -8,29 +8,47 @@ import com.morpheusdata.core.util.HttpApiClient.RequestOptions
 
  
 String.metaClass.toMap = { -> return new JsonSlurper().parseText(delegate) }
-Map getDatasource(String fromSource) {
-    def datasource = ["url": "", "username": "morpheus", "password": "", "driverClassName": "com.mysql.cj.jdbc.Driver"]
-    switch(fromSource) {
-        case "shell":
-            datasource = results['getDatasourceDetails'].dataSource ?: results.getDatasourceDetails.dataSource
-            break
-        case "cypher":
-            def CYPHER_PATH = 'secret/morpheus-mysql-datasource'
-            def CYPHER_RESULT = cypher.read(CYPHER_PATH)
-            if (CYPHER_RESULT != null) {
-                try {
-                    def CYPHER_MAP = MorpheusUtils.getJson(CYPHER_RESULT)
-                    datasource = CYPHER_MAP.dataSource
-                } catch (Exception e) {
-                    println "\u001B[31mError parsing dataSource object from Cypher:\n${e.getMessage()}\nStacktrace:\n${e.printStackTrace()}\u001B[0m"
-                }
+Map getDatasource() {
+    def defaultDatasource = ["url": "", "username": "morpheus", "password": "", "driverClassName": "com.mysql.cj.jdbc.Driver"]
+    def datasource = defaultDatasource
+    List<String> sources = ["shell", "cypher", "customOptions"]
+    for (String source : sources) {
+        try {
+            switch(source) {
+                case "shell":
+                    datasource = results['getDatasourceDetails']?.dataSource ?: results.getDatasourceDetails?.dataSource
+                    break
+                case "cypher":
+                    def CYPHER_PATH = 'secret/morpheus-mysql-datasource'
+                    def CYPHER_RESULT = cypher.read(CYPHER_PATH)
+                    if (CYPHER_RESULT != null) {
+                        try {
+                            def CYPHER_MAP = MorpheusUtils.getJson(CYPHER_RESULT)
+                            datasource = CYPHER_MAP?.dataSource
+                        } catch (Exception e) {
+                            println "\u001B[31mError parsing dataSource object from Cypher:\n${e.getMessage()}\nStacktrace:\n${e.printStackTrace()}\u001B[0m"
+                        }
+                    }
+                    break
+                case "customOptions":
+                    datasource = customOptions?.dataSource
+                    break
+                
+                default:
+                    println "\u001B[33mUsing default datasource config: ${defaultDatasource}\u001B[0m"
+                    datasource = defaultDatasource
+                    break
             }
-            break
-        default:
-            println "\u001B[33mUsing default datasource config: ${datasource}\u001B[0m"
-            break
+            if (datasource) {
+                logDebug("Datasource found from ${source}:", "${datasource}")
+                return datasource
+            }
+        } catch (Exception e) {
+            println "\u001B[31mError retrieving datasource from ${source}:\n${e.getMessage()}\nStacktrace:\n${e.printStackTrace()}\u001B[0m"
+        }
     }
-    return datasource
+    println "\u001B[33mNo valid datasource found, using default: ${defaultDatasource}\u001B[0m"
+    return defaultDatasource
 }
  
 static Sql getSqlClient(Map datasource) {
