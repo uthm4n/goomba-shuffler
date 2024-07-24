@@ -114,7 +114,7 @@ def main() {
                 TreeLogger.decreaseLevel()
                 sql.executeUpdate(updatePrimaryQuery)
                 sql.executeUpdate(updateSecondaryQuery)
-                logDebug("AFTER UPDATE - Primary: ${primary}, Secondary: ${secondary}")
+                logDebug("AFTER UPDATE:\r\n${currentNetworkInterfaces}")
             }
         }
     } catch (Exception e) {
