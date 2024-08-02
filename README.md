@@ -1,4 +1,4 @@
-# network-interface-updater
+# goomba-nic-shuffler
 
 ### NOTE: THE FINAL WORKING SOLUTION IS IN THE `workflow/` FOLDER IN THIS REPOSITORY
   Purpose
