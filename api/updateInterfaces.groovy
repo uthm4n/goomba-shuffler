@@ -67,9 +67,9 @@ def GOOMBA_SHUFFLE(Map SERVER_MAP) {
 }
 
 def LOG(String description, Object payload) {
-    println "=== ${description} ==="
+    println "================================== ${description} ======================================="
     println payload
-    println "=============================="
+    println ""
 }
 
 def generateServerInfo(Map SERVER_MAP) {
@@ -85,8 +85,9 @@ def generateServerInfo(Map SERVER_MAP) {
             ├── id: ${PRIMARY_ID} - PRIMARY: 🆃🆁🆄🅴   
             ├── id: ${NON_PRIMARY_IDS.size() > 0 ? NON_PRIMARY_IDS[0] : "null"} - PRIMARY: ❌
             └── id: ${NON_PRIMARY_IDS.size() > 1 ? NON_PRIMARY_IDS[1] : "null"} - PRIMARY: ❌
-===============================================================================      
+	     
     data: ${SERVER_MAP}
+    
     """
     
     return SERVER_INFO
@@ -114,15 +115,21 @@ def INTERFACE_RESULTS() {
     ]
 
     def UPDATE_RESULTS = API_CLIENT("PUT", "/api/servers/$SERVER_ID", null, UPDATE_PAYLOAD)
-    
-    if (!UPDATE_RESULTS.success) {
+    if (UPDATE_RESULTS.success) {
+    	def final_results = UPDATE_RESULTS.data.server.interfaces
+        println "================================== UPDATE_RESULTS =================================="
+        final_results.each { network_interface ->
+          println "ID: ${network_interface.id}, Name: ${network_interface.name}, Primary Interface: ${network_interface.primaryInterface ? '🆃🆁🆄🅴' : '❌'}"
+        }
+        println ""
+    	LOG("Interfaces successfully updated!", "✅ TRUE ✅")
+    }
+    else {
         log.debug("ERROR UPDATING SERVER $SERVER_ID: ${UPDATE_RESULTS.errors}")
         return "ERROR: Unable to update server interfaces."
     }
 
-    LOG("UPDATE_RESULTS", UPDATE_RESULTS)
-
-    return generateServerInfo(UPDATED_SERVER_MAP)
+    LOG("**** DEBUG ****", UPDATE_RESULTS)
 }
 
 println "${INTERFACE_RESULTS()}"
