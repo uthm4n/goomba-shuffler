@@ -37,7 +37,8 @@ The goal of the Groovy Script is to swap the current secondary network interface
 
 <details>
   <summary>API</summary>
+
   1. Create a task in Morpheus with the code contained in the updateInterfaces.groovy file
-  2. Trigger the task on a test instance and/or server 
-  3. Expected output should look something like this: 
+  2. Trigger the task on a test instance and/or server
+  3. Expected output should look something like this
 </details>
