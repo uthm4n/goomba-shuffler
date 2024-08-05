@@ -1,4 +1,4 @@
-# goomba-nic-shuffler
+# goomba-shuffler
 
 ### NOTE: THE FINAL WORKING SOLUTION IS IN THE `workflow/` FOLDER IN THIS REPOSITORY
   Purpose
@@ -7,7 +7,7 @@
 ## Setup:
 1. SSH into a Morpheus application node
 2. Retrieve the database password from `/etc/morpheus/morpheus-secrets.json`
-3. Create a new Cypher called `secret/morpheus-mysql-datasource` that matches [dataSource.json](https://github.com/uthm4n/network-interface-updater/blob/main/workflow/dataSource.json):
+3. Create a new Cypher called `secret/morpheus-mysql-datasource` that matches [dataSource.json](https://github.com/uthm4n/goomba-shuffler/blob/main/workflow/dataSource.json):
 ```
 {
     "dataSource": {
@@ -19,7 +19,7 @@
 }
 ```
 3. Replace the password in the JSON object above with your database password > Save the Cypher
-4. Create the Groovy Script task in Morpheus (Library > Automation > Tasks) - the script is located in the [workflow](https://github.com/uthm4n/network-interface-updater/tree/main/workflow) folder in this repository.
+4. Create the Groovy Script task in Morpheus (Library > Automation > Tasks) - the script is located in the [workflow](https://github.com/uthm4n/goomba-shuffler/tree/main/workflow) folder in this repository.
 5. Attach to an operational or provisioning workflow
 6. Trigger on an **instance**
 
