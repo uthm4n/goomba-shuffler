@@ -38,7 +38,10 @@ The goal of the Groovy Script is to swap the current secondary network interface
 <details>
   <summary>API</summary>
 
-  1. Create a task in Morpheus with the code contained in the updateInterfaces.groovy file
-  2. Trigger the task on a test instance and/or server
-  3. Expected output should look something like this
+  1. Copy the code from the [updateInterfaces.groovy](https://github.com/uthm4n/goomba-shuffler/blob/main/api/updateInterfaces.groovy) (`/api/updateInterfaces.groovy`) file in this repository
+  2. Create a new Groovy Script task in Morpheus
+  3. Paste the code into the Content section of the task
+  4. Execute the task on a test instance and/or server
+  5. Expected output should look something like this:
+     ![](https://github.com/uthm4n/goomba-shuffler/blob/main/api/network-interface-update-api.gif)
 </details>
