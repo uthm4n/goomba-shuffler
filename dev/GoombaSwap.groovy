@@ -75,7 +75,7 @@ void getInterfaceData() {
     executeQuery(query)
 }
 
-def getInstanceJSON(Boolean asMap = false, Boolean asPrettyJson = false) {
+def getInstanceJSON() {
     def query = """
     SELECT JSON_OBJECT(
         'instance', 
@@ -103,14 +103,9 @@ def getInstanceJSON(Boolean asMap = false, Boolean asPrettyJson = false) {
     def result = executeQuery(query)
 	
     def json_result_extracted = result.find(/(?s)\{.*\}/)
-    if (asMap) {
-    	result = MorpheusUtils.getJson(json_result_extracted)
-    }
-    
-    if (asPrettyJson) {
-    	result = JsonOutput.prettyPrint(json_result_extracted)
-    }
-    
+    println "{GREEN}${BLUE}MAP:${NC} \r\n${RED}${MorpheusUtils.getJson(json_result_extracted)}${NC}"
+    println "{GREEN}${BLUE}JSON:${NC} \r\n${RED}${JsonOutput.prettyPrint(json_result_extracted)}${NC}"
+
     return result
 }
 
