@@ -130,14 +130,7 @@ getServerInterfaceMappings()
 println "Executing getInterfaceData..."
 getInterfaceData()
 
-println "Executing getInstanceJSON() after sleep..."
-getInstanceJSON(false, false)
-
-println "PRETTY JSON:"
-getInstanceJSON(false, true)
-
-println "MAP:"
-def resultMap = getInstanceJSON(true, false)
-println resultMap
+println "Executing getInstanceJSON()..."
+getInstanceJSON()
 
 println "Script execution completed."
