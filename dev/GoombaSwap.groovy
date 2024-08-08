@@ -108,9 +108,25 @@ def getInstanceJSON() {
     println "${GREEN}${BLUE}JSON:${NC} \r\n${RED}${JsonOutput.prettyPrint(json_result_extracted)}${NC}"
 
     println "Swapping interfaces in map..."
-    instanceMap.instance.interfaces.each { network_interface ->
-	def primaryInterfaceStatus = decode(network_interface.primary_interface)
-	network_interface.primary_interface = primaryInterfaceStatus == '0' ? false : true
+    println "Decoding primary_interface for network_interface"
+    instanceMap.instance.server.interfaces.each { network_interface ->
+	    println "ID: ${network_interface.id}"
+	    println "PRIMARY: ${network_interface.primary_interface}"
+	    println "Decoding primary_interface from base64..."
+	    
+	    // Decode the base64 part
+	    byte[] primary_interface_decoded = Base64.decoder.decode(network_interface.primary_interface.split(':')[2])
+	    
+	    println "DECODED: ${new String(primary_interface_decoded)}"
+	    println "BYTES: ${primary_interface_decoded}"
+	    println "\r\n"
+	    
+	    // Check if the first byte equals 0 (meaning it's not primary)
+	    if (primary_interface_decoded[0] == 0) { 
+	        println "network interface ${network_interface.id} IS NOT PRIMARY <${primary_interface_decoded}>" 
+	    } else { 
+	        println "network interface ${network_interface.id} IS PRIMARY <${primary_interface_decoded}>" 
+	}
     }
 
     return result
