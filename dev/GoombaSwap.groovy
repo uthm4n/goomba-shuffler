@@ -103,8 +103,15 @@ def getInstanceJSON() {
     def result = executeQuery(query)
 	
     def json_result_extracted = result.find(/(?s)\{.*\}/)
-    println "{GREEN}${BLUE}MAP:${NC} \r\n${RED}${MorpheusUtils.getJson(json_result_extracted)}${NC}"
-    println "{GREEN}${BLUE}JSON:${NC} \r\n${RED}${JsonOutput.prettyPrint(json_result_extracted)}${NC}"
+    def instanceMap = MorpheusUtils.getJson(json_result_extracted)
+    println "${GREEN}${BLUE}MAP:${NC} \r\n${RED}${instanceMap}${NC}"
+    println "${GREEN}${BLUE}JSON:${NC} \r\n${RED}${JsonOutput.prettyPrint(json_result_extracted)}${NC}"
+
+    println "Swapping interfaces in map..."
+    instanceMap.instance.interfaces.each { network_interface ->
+	def primaryInterfaceStatus = decode(network_interface.primary_interface)
+	network_interface.primary_interface = primaryInterfaceStatus == '0' ? false : true
+    }
 
     return result
 }
