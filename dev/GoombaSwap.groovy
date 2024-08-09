@@ -106,12 +106,14 @@ def getInstanceJSON() {
     def instanceMap = MorpheusUtils.getJson(json_result_extracted)
     println "${GREEN}${BLUE}MAP:${NC} \r\n${RED}${instanceMap}${NC}"
     println "${GREEN}${BLUE}JSON:${NC} \r\n${RED}${JsonOutput.prettyPrint(json_result_extracted)}${NC}"
+    swapInterfaces(instanceMap)
+    updateInterfaces(instanceMap)
 	
     return result
 }
 
 def swapInterfaces(Map instanceMap) {
-    println "Swapping interfaces in map..."
+    println "Swapping interfaces in map using swapInterfaces()..."
     def interfaces = instanceMap.instance.server.interfaces
     interfaces.each { network_interface ->
 	    // Decode the base64 part
@@ -130,11 +132,10 @@ def swapInterfaces(Map instanceMap) {
 	    } else { 
 	        println "network interface ${network_interface.id} IS PRIMARY <${primary_interface_decoded}>\r\n"
 	    }
+	network_interface.primary_interface = IS_PRIMARY[0] == 0
     }
-    	network_interface.primary_interface = IS_PRIMARY[0] == 0
 	instanceMap.instance.server.interfaces = interfaces
-    	println "${GREEN}${BLUE}DECODED INTERFACE CONFIGURATIONS:${NC} \r\n${RED}${JsonOutput.prettyPrint(JsonOutput.toJson(instanceMap))}${NC}"
-	
+    	println "${GREEN}${BLUE}FINAL INTERFACE CONFIGURATIONS:${NC} \r\n${RED}${JsonOutput.prettyPrint(JsonOutput.toJson(instanceMap))}${NC}"
 }
 
 def updateInterfaces(Map instanceMap) {
