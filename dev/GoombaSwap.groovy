@@ -127,9 +127,9 @@ def swapInterfaces(Map instanceMap) {
 	    
 	    // Check if the first byte equals 0 (meaning it's not primary)
 	    if (IS_PRIMARY[0] == 0) { 
-	        println "network interface ${network_interface.id} IS NOT PRIMARY <${IS_PRIMARY}\r\n>" 
+	        println "network interface ${network_interface.id} IS NOT PRIMARY <${IS_PRIMARY[0]}\r\n>" 
 	    } else { 
-	        println "network interface ${network_interface.id} IS PRIMARY <${primary_interface_decoded}>\r\n"
+	        println "network interface ${network_interface.id} IS PRIMARY <${IS_PRIMARY[1]}>\r\n"
 	    }
 	network_interface.primary_interface = IS_PRIMARY[0] == 0
     }
