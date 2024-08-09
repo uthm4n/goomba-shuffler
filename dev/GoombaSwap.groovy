@@ -25,7 +25,6 @@ def executeQuery(String query) {
     def process = command.execute()
     process.waitFor()
     def result = process.in.text
-    println "Processing result..."
     Thread.sleep(7000) 
     println "${GREEN}${BLUE}RESULT:${NC} \r\n${RED}$result${NC}"
     
