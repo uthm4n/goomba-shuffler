@@ -119,7 +119,7 @@ def INTERFACE_RESULTS() {
     	def final_results = UPDATE_RESULTS.data.server.interfaces
         println "================================== UPDATE_RESULTS =================================="
         final_results.each { network_interface ->
-          println "ID: ${network_interface.id}, Name: ${network_interface.name}, Primary Interface: ${network_interface.primaryInterface ? '🆃🆁🆄🅴' : '❌'}"
+          println "ID: ${network_interface.id}, Name: ${network_interface.name}, Primary Interface: ${network_interface.primaryInterface ? ' ░T░R░U░E░' : '❌'}"
         }
         println ""
     	LOG("Interfaces successfully updated!", "✅ TRUE ✅")
