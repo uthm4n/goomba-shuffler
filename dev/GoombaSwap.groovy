@@ -106,46 +106,50 @@ def getInstanceJSON() {
     def instanceMap = MorpheusUtils.getJson(json_result_extracted)
     println "${GREEN}${BLUE}MAP:${NC} \r\n${RED}${instanceMap}${NC}"
     println "${GREEN}${BLUE}JSON:${NC} \r\n${RED}${JsonOutput.prettyPrint(json_result_extracted)}${NC}"
-
-    println "Swapping interfaces in map..."
-    println "Decoding primary_interface for network_interface"
-    instanceMap.instance.server.interfaces.each { network_interface ->
-	    println "ID: ${network_interface.id}"
-	    println "PRIMARY: ${network_interface.primary_interface}"
-	    println "Decoding primary_interface from base64..."
-	    
-	    // Decode the base64 part
-	    byte[] primary_interface_decoded = Base64.decoder.decode(network_interface.primary_interface.split(':')[2])
-	    
-	    println "DECODED: ${new String(primary_interface_decoded)}"
-	    println "BYTES: ${primary_interface_decoded}"
-	    println "\r\n"
-	    
-	    // Check if the first byte equals 0 (meaning it's not primary)
-	    if (primary_interface_decoded[0] == 0) { 
-	        println "network interface ${network_interface.id} IS NOT PRIMARY <${primary_interface_decoded}>" 
-	    } else { 
-	        println "network interface ${network_interface.id} IS PRIMARY <${primary_interface_decoded}>" 
-	}
-    }
-
+	
     return result
 }
 
-def decode(String ENCODED_VAL, Boolean decodeNetworkInterfaces = false) {
-    String ENCODED_VALUE = ENCODED_VAL
-    if (decodeNetworkInterfaces) {
-    	ENCODED_VALUE = ENCODED_VAL.split(":")[2]
-	}
+def swapInterfaces(Map instanceMap) {
+    println "Swapping interfaces in map..."
+    def interfaces = instanceMap.instance.server.interfaces
+    interfaces.each { network_interface ->
+	    // Decode the base64 part
+	    byte[] PRIMARY_INTERFACE_BASE64 = Base64.decoder.decode(network_interface.primary_interface.split(':')[2])
+	    def IS_PRIMARY = new String(PRIMARY_INTERFACE_BASE64)
+	    
+	    println "ID: ${network_interface.id}"
+	    println "PRIMARY: ${network_interface.primary_interface}"
+	    println "Decoding primary_interface value ${network_interface.primary_interface} for ${network_interface.id}..."
+	    println "DECODED: ${new String(PRIMARY_INTERFACE_BASE64)}"
+	    println "BYTES: ${PRIMARY_INTERFACE_BASE64}"
+	    
+	    // Check if the first byte equals 0 (meaning it's not primary)
+	    if (IS_PRIMARY[0] == 0) { 
+	        println "network interface ${network_interface.id} IS NOT PRIMARY <${IS_PRIMARY}\r\n>" 
+	    } else { 
+	        println "network interface ${network_interface.id} IS PRIMARY <${primary_interface_decoded}>\r\n"
+	    }
+    }
+    	network_interface.primary_interface = IS_PRIMARY[0] == 0
+	instanceMap.instance.server.interfaces = interfaces
+    	println "${GREEN}${BLUE}DECODED INTERFACE CONFIGURATIONS:${NC} \r\n${RED}${JsonOutput.prettyPrint(JsonOutput.toJson(instanceMap))}${NC}"
 	
-	byte[] ENCODED_BYTE_ARRAY = Base64.decoder.decode(ENCODED_VALUE)
-	println "$ENCODED_BYTE_ARRAY"
-
-	def DECODED_VAL = new String(ENCODED_BYTE_ARRAY, "UTF-8")
-	println "${DECODED_VAL.toString()}"
-
-    return "${DECODED_VAL.toString()}" ?: null
 }
+
+def updateInterfaces(Map instanceMap) {
+	def primary = interfaces.find { it.primary_interface == true }
+	def secondary = interfaces.find { it.primary_interface == false }
+	
+	println "Updating ${primary.id} to FALSE..."
+	def DEMOTE_PRIMARY = "UPDATE compute_server_interface SET primary_interface = 0 WHERE id = ${primary.id}"
+	executeQuery(DEMOTE_PRIMARY)
+
+	println "Updating ${secondary.id} to TRUE..."
+	def PROMOTE_TO_PRIMARY = "UPDATE compute_server_interface SET primary_interface = 1 WHERE id = ${secondary.id}"
+	executeQuery(PROMOTE_TO_PRIMARY)
+}
+
 
 println "Executing getServerInterfaceMappings..."
 getServerInterfaceMappings()
