@@ -82,9 +82,9 @@ def generateServerInfo(Map SERVER_MAP) {
     ├── id: ${server.getAt('id')}
     └── network:
         └── interfaces: 
-            ├── id: ${PRIMARY_ID} - PRIMARY: 🆃🆁🆄🅴   
-            ├── id: ${NON_PRIMARY_IDS.size() > 0 ? NON_PRIMARY_IDS[0] : "null"} - PRIMARY: ❌
-            └── id: ${NON_PRIMARY_IDS.size() > 1 ? NON_PRIMARY_IDS[1] : "null"} - PRIMARY: ❌
+            ├── id: ${PRIMARY_ID} - PRIMARY: ░T░R░U░E░ ✅  
+            ├── id: ${NON_PRIMARY_IDS.size() > 0 ? NON_PRIMARY_IDS[0] : "null"} - PRIMARY: ░F░A░L░S░E░ ❌
+            └── id: ${NON_PRIMARY_IDS.size() > 1 ? NON_PRIMARY_IDS[1] : "null"} - PRIMARY: ░F░A░L░S░E░ ❌
 	     
     data: ${SERVER_MAP}
     
